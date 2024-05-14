@@ -6,7 +6,7 @@ venir
 coure
 moure
 complaure
-lluir
+#lluir - 2 formes
 péixer
 ser
 estar

@@ -31,27 +31,66 @@ def get_word(form, persona):
     raise Exception("Not found")
     
 def get_mode_tense():
-    n = random.randint(0, 1)
+    n = random.randint(0, 2)
     if n == 0:
         return "Indicatiu", "Present"
     if n == 1:
         return "Subjuntiu", "Present"
+    if n == 2:
+        return "Imperatiu", "Present"
+                        
+    raise Exception("Number too big") 
+
+verbs = read_verbs()
+
+def get_random_verb():
+    n = random.randint(0, len(verbs) - 1)
+    return verbs[n]
+    
+def get_verb_json(verb):
+    subdir = verb[0:2]
+    filename = f"data/jsons/{subdir}/{verb}.json"
+    json_data = read_json_file(filename)
+    return json_data
+
+def get_random_code_pronom(mode):
+    n = random.randint(0, 5)
+    if mode == "Imperatiu":
+        n = 1
+
+    if n == 0:
+        return "singular1", "jo"
+    if n == 1:
+        return "singular2", "tu"
+    if n == 2:
+        return "singular3", "ell, ella, vostè"
+        
+    if n == 3:
+        return "plural1", "nosaltres"
+    if n == 4:
+        return "plural2", "vosaltres, vós"
+    if n == 5:
+        return "plural3", "ells, elles, vostès"
             
-    raise Exception("Number too big")            
-            
+    raise Exception("Number too big") 
+
             
 def main():
-    verbs = read_verbs()
- 
-    for verb in verbs:
-        subdir = verb[0:2]
-        filename = f"data/jsons/{subdir}/{verb}.json"
-        json_data = read_json_file(filename)
+    
+#    print(f"Quant és {num_1} {signe} {num_2}?")
+
+    # Pregunta a la Txell
+ #   txell = int(input())
+    
+    for i in range(0, 10):
+        verb = get_random_verb()
+        json_data = get_verb_json(verb)
         mode, tense = get_mode_tense()
         for form in json_data[verb]:
             if form.get("mode") == mode and form.get("tense") == tense:
-                forma = get_word(form, "singular1")
-                print(f"--- {tense} - {mode} {verb} - {forma}")
+                code, pronom = get_random_code_pronom(mode)
+                forma = get_word(form, code)
+                print(f"--- {tense} - {mode} {verb} ({pronom}) - {forma}")
                 break
                 
 if __name__ == "__main__":
