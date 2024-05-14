@@ -1,4 +1,6 @@
 import json
+import random
+
 #https://freeling-user-manual.readthedocs.io/en/latest/tagsets/tagset-ca/#part-of-speech-verb
 def read_json_file(filename):
     try:
@@ -21,23 +23,36 @@ def read_verbs():
 def get_word(form, persona):
     words = form[persona]
     for word in words:
-        if word["variant"] in ["C", "0"]:
+        if word["variant"] not in ["4", "6", "7", "B", "V", "Z"]:
             w = word["word"]
             return w
 
     print(form)    
     raise Exception("Not found")
-
-verbs = read_verbs()
+    
+def get_mode_tense():
+    n = random.randint(0, 1)
+    if n == 0:
+        return "Indicatiu", "Present"
+    if n == 1:
+        return "Subjuntiu", "Present"
+            
+    raise Exception("Number too big")            
+            
+            
+def main():
+    verbs = read_verbs()
  
-for verb in verbs:
-    # Example usage:
-    subdir = verb[0:2]
-    filename = f"data/jsons/{subdir}/{verb}.json"
-    json_data = read_json_file(filename)
-    for form in json_data[verb]:
-        if form.get("mode") == "Indicatiu" and form.get("tense") == "Present":
-            verb = get_word(form, "singular1")
-            print(f"--- {verb}")            
-            print(verb)
-            break
+    for verb in verbs:
+        subdir = verb[0:2]
+        filename = f"data/jsons/{subdir}/{verb}.json"
+        json_data = read_json_file(filename)
+        mode, tense = get_mode_tense()
+        for form in json_data[verb]:
+            if form.get("mode") == mode and form.get("tense") == tense:
+                forma = get_word(form, "singular1")
+                print(f"--- {tense} - {mode} {verb} - {forma}")
+                break
+                
+if __name__ == "__main__":
+    main()            
