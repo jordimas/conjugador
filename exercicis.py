@@ -73,7 +73,7 @@ def get_verb_json(verb):
 
 def get_random_code_pronom(mode):
     n = random.randint(0, 5)
-    if mode == "Imperatiu":
+    if mode == "Imperatiu" and n==0:
         n = 1
 
     if mode == "Participi":
