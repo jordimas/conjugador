@@ -94,7 +94,8 @@ def get_random_code_pronom(mode):
 def main():
 
     correct = 0
-    DONE = 10
+    DONE = 5
+    entries = []
     for done in range(0, DONE):
         verb = get_random_verb()
         json_data = get_verb_json(verb)
@@ -103,6 +104,7 @@ def main():
             if form.get("mode") == mode and form.get("tense") == tense:
                 code, pronom = get_random_code_pronom(mode)
                 forma = get_word(form, code)
+                entry = f"{tense} {mode} {verb} {pronom} {forma}"
                 print(f"\n--- {tense} - {mode} {verb} ({pronom})")
                 answer = input().strip().lower()
                 forma = [item.strip() for item in forma.split("/")]
@@ -110,6 +112,7 @@ def main():
                 if answer in forma:
                     correct += 1
                     print("Correcte")
+                    entries.append(entry)
                 else:
                     forma_show = ", ".join(forma)
                     print(f"Resposta donada '{answer}', correcta '{forma_show}'")
@@ -117,7 +120,9 @@ def main():
                 break
 
     print(f"Total: {DONE}, encerts: {correct}, errades: {DONE-correct}")
-
+    with open('correct.txt', 'a') as _file:
+        for entry in entries:
+           _file.write(entry + "\n")
 
 if __name__ == "__main__":
     comb = len(verbs) * MODES * PERSONES
