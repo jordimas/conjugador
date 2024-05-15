@@ -1,10 +1,11 @@
 import json
 import random
 
-#https://freeling-user-manual.readthedocs.io/en/latest/tagsets/tagset-ca/#part-of-speech-verb
+
+# https://freeling-user-manual.readthedocs.io/en/latest/tagsets/tagset-ca/#part-of-speech-verb
 def read_json_file(filename):
     try:
-        with open(filename, 'r') as file:
+        with open(filename, "r") as file:
             data = json.load(file)
         return data
     except FileNotFoundError:
@@ -14,12 +15,18 @@ def read_json_file(filename):
         print(f"Error: '{filename}' is not a valid JSON file.")
         return None
 
+
 def read_verbs():
-    with open("verbs.txt", 'r') as _file:
-        data = [_line.strip() for _line in _file.readlines() if _line.strip() and not _line.strip().startswith('#')]
-        
+    with open("verbs.txt", "r") as _file:
+        data = [
+            _line.strip()
+            for _line in _file.readlines()
+            if _line.strip() and not _line.strip().startswith("#")
+        ]
+
     return data
-        
+
+
 def get_word(form, persona):
     words = form[persona]
     for word in words:
@@ -27,34 +34,40 @@ def get_word(form, persona):
             w = word["word"]
             return w
 
-    print(form)    
+    print(form)
     raise Exception("Not found")
 
-MODES=3
+
+MODES = 3
 PERSONES = 6
-    
+
+
 def get_mode_tense():
-    n = random.randint(0, MODES-1)
+    n = random.randint(0, MODES - 1)
     if n == 0:
         return "Indicatiu", "Present"
     if n == 1:
         return "Subjuntiu", "Present"
     if n == 2:
         return "Imperatiu", "Present"
-                        
-    raise Exception("Number too big") 
+
+    raise Exception("Number too big")
+
 
 verbs = read_verbs()
+
 
 def get_random_verb():
     n = random.randint(0, len(verbs) - 1)
     return verbs[n]
-    
+
+
 def get_verb_json(verb):
     subdir = verb[0:2]
     filename = f"data/jsons/{subdir}/{verb}.json"
     json_data = read_json_file(filename)
     return json_data
+
 
 def get_random_code_pronom(mode):
     n = random.randint(0, 5)
@@ -67,24 +80,19 @@ def get_random_code_pronom(mode):
         return "singular2", "tu"
     if n == 2:
         return "singular3", "ell, ella, vostè"
-        
+
     if n == 3:
         return "plural1", "nosaltres"
     if n == 4:
         return "plural2", "vosaltres, vós"
     if n == 5:
         return "plural3", "ells, elles, vostès"
-            
-    raise Exception("Number too big") 
 
-            
+    raise Exception("Number too big")
+
+
 def main():
-    
-#    print(f"Quant és {num_1} {signe} {num_2}?")
 
-    # Pregunta a la Txell
- #       
-    
     correct = 0
     DONE = 5
     for done in range(0, DONE):
@@ -102,10 +110,11 @@ def main():
                     print("Resposta donada 'forma', correcta 'correct'")
                 else:
                     print("Correcte")
-                
+
                 break
 
     print(f"Total: {DONE}, correct: {correct}, failed: {DONE-correct}")
+
 
 if __name__ == "__main__":
     comb = len(verbs) * MODES * PERSONES
