@@ -104,12 +104,16 @@ def main():
                 code, pronom = get_random_code_pronom(mode)
                 forma = get_word(form, code)
                 print(f"--- {tense} - {mode} {verb} ({pronom})")
+                print(forma)
                 answer = input().strip().lower()
-                if forma == correct:
-                    print("Resposta donada 'forma', correcta 'correct'")
-                else:                
-                    correct += 1                
+                forma = [item.strip() for item in forma.split("/")]
+                #                print(f"forma: {forma}, answer: {answer}")
+                if answer in forma:
+                    correct += 1
                     print("Correcte")
+                else:
+                    forma_show = ", ".join(forma)
+                    print(f"Resposta donada '{answer}', correcta '{forma_show}'")
 
                 break
 
