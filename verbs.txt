@@ -7,6 +7,8 @@ conèixer
 contradir
 coure
 creure
+dir
+duc
 dissentir
 empènyer
 encendre
@@ -15,9 +17,12 @@ estar
 excloure
 #lluir - 2 formes
 moure
+moldre
 péixer
 presentar
+tenir
 ser
+saber
+seure
 sobreeixir
-venir
 venir
