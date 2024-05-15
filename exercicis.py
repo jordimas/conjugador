@@ -90,13 +90,26 @@ def get_random_code_pronom(mode):
 
     raise Exception("Number too big")
 
+def read_corrects():
+    with open("corrects.txt", "r") as _file:
+        data = [
+            _line.strip()
+            for _line in _file.readlines()
+            if _line.strip()
+                    ]
+
+    print(f"Read correct: len(data)")
+    return set(data)
+
 
 def main():
 
     correct = 0
     DONE = 5
     entries = []
-    for done in range(0, DONE):
+    previous_correct = read_corrects()
+    done = 0
+    for i in range(0, DONE):
         verb = get_random_verb()
         json_data = get_verb_json(verb)
         mode, tense = get_mode_tense()
@@ -105,9 +118,14 @@ def main():
                 code, pronom = get_random_code_pronom(mode)
                 forma = get_word(form, code)
                 entry = f"{tense} {mode} {verb} {pronom} {forma}"
+                if entry in previous_correct:
+                    print("skipping: {entry}")
+                    break
+                    
                 print(f"\n--- {tense} - {mode} {verb} ({pronom})")
+                done += 1
                 answer = input().strip().lower()
-                forma = [item.strip() for item in forma.split("/")]
+                forma = [item.strip() for item in forma.split("/")]                
                 #                print(f"forma: {forma}, answer: {answer}")
                 if answer in forma:
                     correct += 1
