@@ -94,7 +94,7 @@ def get_random_code_pronom(mode):
 def main():
 
     correct = 0
-    DONE = 5
+    DONE = 10
     for done in range(0, DONE):
         verb = get_random_verb()
         json_data = get_verb_json(verb)
@@ -106,9 +106,9 @@ def main():
                 print(f"--- {tense} - {mode} {verb} ({pronom})")
                 answer = input().strip().lower()
                 if forma == correct:
-                    correct += 1
                     print("Resposta donada 'forma', correcta 'correct'")
-                else:
+                else:                
+                    correct += 1                
                     print("Correcte")
 
                 break
