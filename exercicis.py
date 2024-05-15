@@ -90,13 +90,10 @@ def get_random_code_pronom(mode):
 
     raise Exception("Number too big")
 
+
 def read_corrects():
     with open("correct.txt", "r") as _file:
-        data = [
-            _line.strip()
-            for _line in _file.readlines()
-            if _line.strip()
-                    ]
+        data = [_line.strip() for _line in _file.readlines() if _line.strip()]
 
     print(f"Read correct: {len(data)}")
     return set(data)
@@ -119,32 +116,38 @@ def main():
                 code, pronom = get_random_code_pronom(mode)
                 forma = get_word(form, code)
                 entry = f"{tense} {mode} {verb} {pronom} {forma}"
-#                print(f"entry: '{entry}'")
-#                print(f"previous: {previous_correct}")
+                #                print(f"entry: '{entry}'")
+                #                print(f"previous: {previous_correct}")
                 if entry in previous_correct:
-                    #print(f"Skipping: {entry}")
+                    # print(f"Skipping: {entry}")
                     skipped += 1
                     break
-                    
+
                 print(f"\n--- {tense} - {mode} {verb} ({pronom})")
                 done += 1
                 answer = input().strip().lower()
-                forma = [item.strip() for item in forma.split("/")]                
+                forma = [item.strip() for item in forma.split("/")]
                 #                print(f"forma: {forma}, answer: {answer}")
+                forma_show = ", ".join(forma)
                 if answer in forma:
                     correct += 1
-                    print("Correcte")
+                    if len(forma) == 1:
+                        print("Correcte")
+                    else:
+                        print(f"Correcte: {forma_show}")
                     entries.append(entry)
                 else:
-                    forma_show = ", ".join(forma)
                     print(f"Resposta donada '{answer}', correcta '{forma_show}'")
 
                 break
 
-    print(f"Total: {DONE}, encerts: {correct}, errades: {DONE-correct}, ja contestats {skipped}")
-    with open('correct.txt', 'a') as _file:
+    print(
+        f"Total: {DONE}, encerts: {correct}, errades: {DONE-correct}, ja contestats {skipped}"
+    )
+    with open("correct.txt", "a") as _file:
         for entry in entries:
-           _file.write(entry + "\n")
+            _file.write(entry + "\n")
+
 
 if __name__ == "__main__":
     comb = len(verbs) * MODES * PERSONES
