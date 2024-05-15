@@ -38,7 +38,7 @@ def get_word(form, persona):
     raise Exception("Not found")
 
 
-MODES = 3
+MODES = 4
 PERSONES = 6
 
 
@@ -50,6 +50,8 @@ def get_mode_tense():
         return "Subjuntiu", "Present"
     if n == 2:
         return "Imperatiu", "Present"
+    if n == 3:
+        return "Formes no personals", "Participi"
 
     raise Exception("Number too big")
 
@@ -73,6 +75,9 @@ def get_random_code_pronom(mode):
     n = random.randint(0, 5)
     if mode == "Imperatiu":
         n = 1
+
+    if mode == "Participi":
+        n = 0
 
     if n == 0:
         return "singular1", "jo"
