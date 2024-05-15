@@ -51,7 +51,7 @@ def get_mode_tense():
     if n == 2:
         return "Imperatiu", "Present"
     if n == 3:
-        return "Formes no personals", "Participi"
+        return "Participi", "Formes no personals"
 
     raise Exception("Number too big")
 
