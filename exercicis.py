@@ -103,8 +103,7 @@ def main():
             if form.get("mode") == mode and form.get("tense") == tense:
                 code, pronom = get_random_code_pronom(mode)
                 forma = get_word(form, code)
-                print(f"--- {tense} - {mode} {verb} ({pronom})")
-                print(forma)
+                print(f"\n--- {tense} - {mode} {verb} ({pronom})")
                 answer = input().strip().lower()
                 forma = [item.strip() for item in forma.split("/")]
                 #                print(f"forma: {forma}, answer: {answer}")
@@ -117,7 +116,7 @@ def main():
 
                 break
 
-    print(f"Total: {DONE}, correct: {correct}, failed: {DONE-correct}")
+    print(f"Total: {DONE}, encerts: {correct}, errades: {DONE-correct}")
 
 
 if __name__ == "__main__":
