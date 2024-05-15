@@ -109,6 +109,7 @@ def main():
     entries = []
     previous_correct = read_corrects()
     done = 0
+    skipped = 0
     for i in range(0, DONE):
         verb = get_random_verb()
         json_data = get_verb_json(verb)
@@ -121,7 +122,8 @@ def main():
 #                print(f"entry: '{entry}'")
 #                print(f"previous: {previous_correct}")
                 if entry in previous_correct:
-                    print(f"Skipping: {entry}")
+                    #print(f"Skipping: {entry}")
+                    skipped += 1
                     break
                     
                 print(f"\n--- {tense} - {mode} {verb} ({pronom})")
@@ -139,7 +141,7 @@ def main():
 
                 break
 
-    print(f"Total: {DONE}, encerts: {correct}, errades: {DONE-correct}")
+    print(f"Total: {DONE}, encerts: {correct}, errades: {DONE-correct}, ja contestats {skipped}")
     with open('correct.txt', 'a') as _file:
         for entry in entries:
            _file.write(entry + "\n")
