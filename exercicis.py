@@ -29,9 +29,12 @@ def get_word(form, persona):
 
     print(form)    
     raise Exception("Not found")
+
+MODES=3
+PERSONES = 6
     
 def get_mode_tense():
-    n = random.randint(0, 2)
+    n = random.randint(0, MODES-1)
     if n == 0:
         return "Indicatiu", "Present"
     if n == 1:
@@ -80,9 +83,11 @@ def main():
 #    print(f"Quant és {num_1} {signe} {num_2}?")
 
     # Pregunta a la Txell
- #   txell = int(input())
+ #       
     
-    for i in range(0, 10):
+    correct = 0
+    DONE = 5
+    for done in range(0, DONE):
         verb = get_random_verb()
         json_data = get_verb_json(verb)
         mode, tense = get_mode_tense()
@@ -90,8 +95,19 @@ def main():
             if form.get("mode") == mode and form.get("tense") == tense:
                 code, pronom = get_random_code_pronom(mode)
                 forma = get_word(form, code)
-                print(f"--- {tense} - {mode} {verb} ({pronom}) - {forma}")
-                break
+                print(f"--- {tense} - {mode} {verb} ({pronom})")
+                answer = input().strip().lower()
+                if forma == correct:
+                    correct += 1
+                    print("Resposta donada 'forma', correcta 'correct'")
+                else:
+                    print("Correcte")
                 
+                break
+
+    print(f"Total: {DONE}, correct: {correct}, failed: {DONE-correct}")
+
 if __name__ == "__main__":
-    main()            
+    comb = len(verbs) * MODES * PERSONES
+    print(f"Combinacions: {comb}")
+    main()
