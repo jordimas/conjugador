@@ -73,7 +73,7 @@ def get_verb_json(verb):
 
 def get_random_code_pronom(mode):
     n = random.randint(0, 5)
-    if mode == "Imperatiu"# and n==0:
+    if mode == "Imperatiu":# and n==0:
         n = 1
 
     if mode == "Participi":
@@ -107,12 +107,16 @@ def read_corrects():
 def main():
 
     correct = 0
-    DONE = 10
+    incorrect = 0
+    DONE = 30
     entries = []
     previous_correct = read_corrects()
     done = 0
     skipped = 0
-    for i in range(0, DONE):
+    while True:
+        if correct + incorrect > DONE:
+            break
+            
         verb = get_random_verb()
         json_data = get_verb_json(verb)
         mode, tense = get_mode_tense()
@@ -142,12 +146,13 @@ def main():
                         print(f"Correcte: {forma_show}")
                     entries.append(entry)
                 else:
+                    incorrect += 1
                     print(f"Resposta donada '{answer}', correcta '{forma_show}'")
 
                 break
 
     print(
-        f"Total: {DONE}, encerts: {correct}, errades: {DONE-correct}, ja contestats {skipped}"
+        f"Total: {DONE}, encerts: {correct}, errades: {incorrect}, ja contestats {skipped}"
     )
     with open("correct.txt", "a") as _file:
         for entry in entries:
