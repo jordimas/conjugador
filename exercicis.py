@@ -132,7 +132,8 @@ def main():
                     skipped += 1
                     break
 
-                print(f"\n--- {tense} - {mode} {verb} ({pronom})")
+                tense_show = f"{tense} - " if mode != "Imperatiu" else ""
+                print(f"\n--- {tense_show}{mode} {verb} ({pronom})")
                 done += 1
                 answer = input().strip().lower()
                 forma = [item.strip() for item in forma.split("/")]
